@@ -16,7 +16,7 @@
 
 template <typename T>
 std::ostream &operator<<(std::ostream &output, const bool &input) {
-    if (input == false) {
+    if (input) {
         std::cout << "false\n";
     } else {
         std::cout << "true\n";
@@ -27,40 +27,39 @@ std::ostream &operator<<(std::ostream &output, const bool &input) {
 }
 
 template <typename T>
-std::ostream &operator<<(std::ostream &output, const int &input) {
+std::ostream &operator<<(std::ostream &output, const long long &input) {
     std::cout << input << std::endl;
     return output;
 }
 
 class Solution {
     public:
-        int minGroups(std::vector<std::vector<int>> &intervals) {
-            std::vector<std::pair<int, int>> groupContainer;
-            for (auto p : intervals) {
-                groupContainer.push_back({p[0], 1});
-                groupContainer.push_back({p[1] + 1, -1});
+        long long maxKelements(std::vector<int> &nums, int k) {
+            std::priority_queue<int> pq;
+            long long max = 0;
+            for (int n : nums) {
+                pq.push(n);
             }
 
-            std::sort(groupContainer.begin(), groupContainer.end());
-            int concurrentIntervals    = 0;
-            int maxConcurrentIntervals = 0;
-            for (auto g : groupContainer) {
-                concurrentIntervals += g.second;
-                maxConcurrentIntervals = std::max(maxConcurrentIntervals, concurrentIntervals);
+            while (k--) {
+                int maxQueue = pq.top();
+                max += maxQueue;
+                pq.pop();
+                pq.push(std::ceil(maxQueue / 3.0));
             }
 
-            return maxConcurrentIntervals;
+            return max;
         }
 };
 
 int main() {
-    std::vector<std::vector<std::vector<int>>> input_s1 = {{{5, 10}, {6, 8}, {1, 5}, {2, 3}, {1, 10}}, {{1, 3}, {5, 6}, {8, 10}, {11, 13}}};
-    std::vector<int> target_friend = {1, 0};
+    std::vector<std::vector<int>> input_s1 = {{10, 10, 10, 10, 10}, {1, 10, 3, 3, 3}};
+    std::vector<int> target_k = {5, 3};
 
     for (int i = 0; i < input_s1.size(); i++) {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
-        auto r = s.minGroups(input_s1[i]);
+        auto r = s.maxKelements(input_s1[i], target_k[i]);
         std::cout << r << std::endl;
     }
 
