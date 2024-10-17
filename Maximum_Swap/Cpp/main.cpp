@@ -35,12 +35,26 @@ std::ostream &operator<<(std::ostream &output, const long long &input) {
 class Solution {
     public:
         int maximumSwap(int num) {
-            return 1899;
+            std::string cvtNum = std::to_string(num);
+            int current        = 0;
+
+            int n_length       = cvtNum.size();
+            int max_num        = num;
+
+            for (int i = 0; i < n_length; i++) {
+                for (int j = i + 1; j < n_length; j++) {
+                    std::swap(cvtNum[i], cvtNum[j]);
+                    max_num = std::max(max_num, std::stoi(cvtNum));
+                    std::swap(cvtNum[j], cvtNum[i]);
+                }
+            }
+
+            return max_num;
         }
 };
 
 int main() {
-    std::vector<int> input_s1 = {2736, 9973};
+    std::vector<int> input_s1 = {2736, 9973, 1777, 98800435};
 
     for (int i = 0; i < input_s1.size(); i++) {
         Solution s;
