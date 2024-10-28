@@ -59,8 +59,11 @@ Compile() {
     fi
 }
 
+Clean() {
+    echo -e "${IYellow}Cleaning up...${COF}"
+    find "$SCRIPT_DIR" -type f -name "*.out" -exec rm -f {} \;
+}
+
 ColorExport
 Compile
-echo -e "${IYellow}Cleaning up...${COF}"
-find "$SCRIPT_DIR" -type f -name "*.out" -exec rm -f {} \;
-find "$SCRIPT_DIR" -type f -name "*.*" -exec rm -f {} \;
+Clean
