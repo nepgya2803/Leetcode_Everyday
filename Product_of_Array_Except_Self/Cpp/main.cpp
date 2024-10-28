@@ -63,7 +63,7 @@ class Solution {
                     zeroCount++;
             });
 
-            if (zeroCount > 0)
+            if (zeroCount > 1)
                 return res;
 
             for (int i = 0; i < res.size(); i++) {
