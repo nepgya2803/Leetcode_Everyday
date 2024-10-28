@@ -14,16 +14,6 @@
 #include <unordered_map>
 #include <vector>
 
-struct TreeNode {
-        int val;
-        TreeNode *left;
-        TreeNode *right;
-        TreeNode() : val(0), left(nullptr), right(nullptr) {}
-        TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-        TreeNode(int x, TreeNode *left, TreeNode *right)
-            : val(x), left(left), right(right) {}
-};
-
 template <typename T>
 std::ostream &operator<<(std::ostream &output, const bool &input) {
     if (input) {
@@ -45,15 +35,16 @@ std::ostream &operator<<(std::ostream &output, const long long &input) {
 // TODO: Solve this shiet
 class Solution {
     public:
-        long long kthLargestLevelSum(TreeNode *root, int k) {}
+        std::vector<std::string> removeSubfolders(std::vector<std::string> &folder) {}
 };
 
 int main() {
-    std::vector<std::vector<TreeNode>> input = {{5, 8, 9, 2, 1, 3, 7, 4, 6}, {1, 2, null, 3}};
+    std::vector<std::vector<std::string>> input = {{"/a", "/a/b", "/c/d", "/c/d/e", "/c/f"}, {"/a", "/a/b/c", "/a/b/d"}, {"/a/b/c", "/a/b/ca", "/a/b/d"}};
+
     for (int i = 0; i < input.size(); i++) {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
-        auto r = s.kthLargestLevelSum(input[i]);
+        auto r = s.removeSubfolders(input[i]);
         std::cout << r << std::endl;
     }
 
