@@ -66,4 +66,6 @@ Clean() {
 
 ColorExport
 Compile
-Clean
+echo -e "${IYellow}Cleaning up...${COF}"
+find "$SCRIPT_DIR" -type f -name "*.out" -exec rm -f {} \;
+find "$SCRIPT_DIR" -type f ! -name "*.*" ! -path "*/.git/*" -exec rm -f {} \;
