@@ -40,41 +40,36 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input) {
 
 class Solution {
     public:
-        bool isPalindrome(std::string s) {
+        std::vector<int> twoSum(std::vector<int> &numbers, int target) {
             int back = 0;
-            int ford = s.size() - 1;
+            int forw = numbers.size() - 1;
 
-            while (back < ford) {
-                while (back < ford && !isAlpha(s[back]))
+            while (back < forw) {
+                int sum = numbers[back] + numbers[forw];
+
+                if (sum < target)
                     back++;
 
-                while (ford > back && !isAlpha(s[ford]))
-                    ford--;
+                if (sum > target)
+                    forw--;
 
-                if (std::tolower(s[ford]) != std::tolower(s[back]))
-                    return false;
-                else
-                    back++, ford--;
+                if (sum == target)
+                    return {back + 1, forw + 1};
             }
 
-            return true;
-        }
-
-    private:
-        bool isAlpha(char character) {
-            char c = std::tolower(character);
-            return std::isalpha(c) || std::isdigit(c);
+            return {0, 0};
         }
 };
 
 int main() {
-    std::vector<std::string> input = {"A man, a plan, a canal: Panama", "race a car", " ", "0P"};
+    std::vector<std::vector<int>> input = {{2, 7, 11, 15}, {2, 3, 4}, {-1, 0}};
+    std::vector<int> target = {9, 6, -1};
 
     for (int i = 0; i < input.size(); i++) {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
-        auto r = s.isPalindrome(input[i]);
-        std::cout << std::boolalpha << (r ? true : false) << std::endl;
+        auto r = s.twoSum(input[i], target[i]);
+        std::cout << r << std::endl;
     }
 
     return 1;
