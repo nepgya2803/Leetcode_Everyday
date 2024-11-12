@@ -44,25 +44,38 @@ class Solution
         std::vector<int> maximumBeauty(std::vector<std::vector<int>> &items, std::vector<int> &queries)
         {
             std::vector<int> maxArr(queries.size(), 0);
+            std::vector<std::vector<int>> newArr {
+                {0, 0}
+            };
 
             std::sort(items.begin(), items.end(), [](std::vector<int> a, std::vector<int> b) {
                 return a[0] < b[0];
             });
 
+            for (auto item : items)
+            {
+                int price  = item[0];
+                int beauty = item[1];
+                if (beauty > newArr.back()[1])
+                {
+                    newArr.push_back({price, beauty});
+                }
+            }
+
             for (int i = 0; i < queries.size(); i++)
             {
-                maxArr[i] = BinarySearch(items, queries[i]);
-                
+                for (int j = newArr.size() - 1; j >= 0; j--)
+                {
+                    if (newArr[j][0] <= queries[i])
+                    {
+                        maxArr[i] = newArr[j][1];
+                        break;
+                    }
+                }
             }
-                
-
-            std::cout << std::endl;
 
             return maxArr;
         }
-
-    private:
-        int BinarySearch(std::vector<std::vector<int>> items, int query) {}
 };
 
 int main()
