@@ -49,18 +49,20 @@ class Solution
                 return a[0] < b[0];
             });
 
-            for (auto i : items)
-                std::cout << i;
+            for (int i = 0; i < queries.size(); i++)
+            {
+                maxArr[i] = BinarySearch(items, queries[i]);
+                
+            }
+                
+
             std::cout << std::endl;
 
             return maxArr;
         }
 
     private:
-        int BinarySearch(std::vector<int> items)
-        {
-            
-        }
+        int BinarySearch(std::vector<std::vector<int>> items, int query) {}
 };
 
 int main()
