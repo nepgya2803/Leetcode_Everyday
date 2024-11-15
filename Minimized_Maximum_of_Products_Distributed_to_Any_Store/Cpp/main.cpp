@@ -43,10 +43,55 @@ class Solution
     public:
         int minimizedMaximum(int n, std::vector<int> &quantities)
         {
+            int left  = 0;
+            int right = *std::max_element(quantities.begin(), quantities.end());
+
             if (n == 1)
-                return *std::max_element(quantities.begin(), quantities.end());
-            
-            
+                return right;
+
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                if (canDistributed(mid, quantities, n))
+                {
+                    right = mid;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+
+            return left;
+        }
+
+    private:
+        bool canDistributed(int mid, std::vector<int> quantities, int n)
+        {
+            int j         = 0;
+            int remaining = quantities[j];
+
+            for (int i = 0; i < n; i++)
+            {
+                if (remaining <= mid)
+                {
+                    j++;
+                    if (j == quantities.size())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        remaining = quantities[j];
+                    }
+                }
+                else
+                {
+                    remaining -= mid;
+                }
+            }
+
+            return false;
         }
 };
 
