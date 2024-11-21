@@ -43,10 +43,36 @@ class Solution
     public:
         int takeCharacters(std::string s, int k)
         {
-            int ans = 0;
-            for (int i = 0; i < s.size(); i++)
+            int ans    = INT32_MAX;
+            auto store = std::vector<int>(3, 0);
 
-                return ans;
+            for (auto c : s)
+            {
+                store[c - 'a']++;
+            }
+
+            for (auto p : store)
+            {
+                if (p < k)
+                {
+                    return -1;
+                }
+            }
+
+            int l = 0;
+
+            for (int r = 0; r < s.length(); r++)
+            {
+                store[s[r] - 'a']--;
+
+                while (*std::min_element(store.begin(), store.end()) < k)
+                {
+                    store[s[l] - 'a']++;
+                    l++;
+                }
+                ans = std::min(ans, static_cast<int>(s.length()) - (r - l + 1));
+            }
+            return ans;
         }
 };
 
