@@ -41,38 +41,51 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
 class Solution
 {
     public:
-        bool checkIfExist(std::vector<int> &arr)
+        int isPrefixOfWord(std::string sentence, std::string searchWord)
         {
-            auto storage = std::set<int>();
-            int n        = arr.size();
+            int numCount   = 0;
+            int currentIdx = 0;
 
-            for (const auto &num : arr)
+            for (int i = 0; i < sentence.size(); i++)
             {
-                if (storage.count(2 * num) || (num % 2 == 0 && storage.count(num / 2)))
+                if(sentence[currentIdx] == searchWord[0])
                 {
-                    return true;
+                    for (int j = currentIdx, s = 0; j < sentence.size() && s < searchWord.size(); j++)
+                    {
+                        
+                    }
                 }
-                storage.insert(num);
             }
 
-            return false;
+            return -1;
         }
 };
 
 int main()
 {
-    std::vector<std::vector<int>> testsets = {
-        {10, 2, 5, 3},
-        {3, 1, 7, 11},
-        {-10, 12, -20, -8, 15},
+    std::vector<std::string> n = {
+        "i love eating burger",
+        "this problem is an easy problem",
+        "i am tired",
+    };
+
+    std::vector<std::string> searchWords = {
+        "burg",
+        "pro",
+        "you",
+    };
+
+    std::vector<std::vector<std::vector<int>>> testsets = {
+        {{2, 4}, {0, 2}, {0, 4}},
+        {{0, 3}, {0, 2}},
     };
 
     for (int i = 0; i < testsets.size(); i++)
     {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
-        auto r = s.checkIfExist(testsets[i]);
-        std::cout << std::boolalpha << r << std::endl;
+        auto r = s.isPrefixOfWord(n[i], searchWords[i]);
+        std::cout << r << std::endl;
     }
 
     return 1;
