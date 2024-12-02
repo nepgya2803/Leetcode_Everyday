@@ -45,14 +45,24 @@ class Solution
         {
             int numCount   = 0;
             int currentIdx = 0;
+            int n          = sentence.size();
+            int m          = searchWord.size();
 
-            for (int i = 0; i < sentence.size(); i++)
+            for (int i = 0; i < n; i++)
             {
-                if(sentence[currentIdx] == searchWord[0])
+                if (i == 0 || sentence[i - 1] == ' ')
                 {
-                    for (int j = currentIdx, s = 0; j < sentence.size() && s < searchWord.size(); j++)
+                    currentIdx++;
+                    int p0 = i;
+                    int p1 = 0;
+                    while (p0 < n && p1 < m && sentence[p0] == searchWord[p1])
                     {
-                        
+                        p0++;
+                        p1++;
+                    }
+                    if (p1 == m)
+                    {
+                        return currentIdx;
                     }
                 }
             }
@@ -75,12 +85,7 @@ int main()
         "you",
     };
 
-    std::vector<std::vector<std::vector<int>>> testsets = {
-        {{2, 4}, {0, 2}, {0, 4}},
-        {{0, 3}, {0, 2}},
-    };
-
-    for (int i = 0; i < testsets.size(); i++)
+    for (int i = 0; i < n.size(); i++)
     {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
