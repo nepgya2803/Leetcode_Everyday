@@ -45,28 +45,23 @@ class Solution
         {
             int n    = s.size();
             int m    = spaces.size();
-            auto res = std::vector<char>(' ', n + m);
             int l    = 0;
             int r    = 0;
+            auto res = std::stringstream();
 
-            for (int i = 0; i < res.size(); i++)
+            for (; l < n;)
             {
-                if (l == spaces[r])
+                if (r < m && l == spaces[r])
                 {
+                    res << ' ';
                     r++;
                     continue;
                 }
-                res[i] = s[l];
+                res << s[l];
                 l++;
             }
 
-            std::stringstream ss;
-            for (auto c : res)
-            {
-                ss << c;
-            }
-
-            return ss.str();
+            return res.str();
         }
 };
 
