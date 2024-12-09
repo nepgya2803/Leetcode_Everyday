@@ -22,19 +22,21 @@ struct TestSuit
         std::vector<std::vector<int>> queries;
 };
 
-template <typename T> std::ostream &operator<<(std::ostream &output, const long long &input)
+template <typename T>
+std::ostream &operator<<(std::ostream &output, const long long &input)
 {
     std::cout << input << std::endl;
     return output;
 }
 
-template <typename T> std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
+template <typename T>
+std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
 {
     std::cout << "[";
 
     for (auto it = input.begin(); it != input.end(); ++it)
         if (std::next(it) == input.end())
-            std::cout << *it;
+            std::cout << std::boolalpha << *it;
         else
             std::cout << *it << ",";
 
@@ -46,7 +48,32 @@ template <typename T> std::ostream &operator<<(std::ostream &output, const std::
 class Solution
 {
     public:
-        std::vector<bool> isArraySpecial(std::vector<int> &nums, std::vector<std::vector<int>> &queries) {}
+        std::vector<bool> isArraySpecial(std::vector<int> &nums, std::vector<std::vector<int>> &queries)
+        {
+            auto res     = std::vector<bool>(queries.size(), false);
+            auto indices = std::vector<int>(nums.size(), 0);
+            indices[0]   = 0;
+            for (int i = 1; i < nums.size(); i++)
+            {
+                if (nums[i] % 2 == nums[i - 1] % 2)
+                {
+                    indices[i] = indices[i - 1] + 1;
+                }
+                else
+                {
+                    indices[i] = indices[i - 1];
+                }
+            }
+
+            for (int i = 0; i < queries.size(); i++)
+            {
+                int start = queries[i][0];
+                int end   = queries[i][1];
+                res[i]    = indices[end] - indices[start] == 0;
+            }
+
+            return res;
+        }
 };
 
 int main()
