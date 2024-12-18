@@ -50,22 +50,18 @@ class Solution
     public:
         std::vector<int> finalPrices(std::vector<int> &prices)
         {
-            auto discounted = std::vector<int>(prices.size(), 0);
+            auto discounted = prices;
+            auto discount   = std::stack<int>();
 
             for (int i = 0; i < prices.size(); i++)
             {
-                int discount = 0;
-
-                for (int j = i + 1; j < prices.size(); j++)
+                while (!discount.empty() && prices[discount.top()] >= prices[i])
                 {
-                    if (prices[i] >= prices[j])
-                    {
-                        discount = prices[j];
-                        break;
-                    }
+                    discounted[discount.top()] -= prices[i];
+                    discount.pop();
                 }
 
-                discounted[i] = prices[i] - discount;
+                discount.push(i);
             }
 
             return discounted;
