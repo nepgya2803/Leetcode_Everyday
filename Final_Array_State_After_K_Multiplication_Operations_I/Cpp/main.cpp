@@ -15,7 +15,7 @@
 #include <vector>
 #include <unordered_set>
 
-#define LOG_DEBUG(x) (std::cout << x << std::endl)
+#define LOG_DEBUG(log, x) (std::cout << ("\033[1;32m" + log + ": " + x + "\033[0m") << std::endl)
 
 struct TestSuit
 {
