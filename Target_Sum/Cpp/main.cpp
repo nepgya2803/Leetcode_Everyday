@@ -26,13 +26,15 @@ struct TestSuit
         int k;
 };
 
-template <typename T> std::ostream &operator<<(std::ostream &output, const long long &input)
+template <typename T>
+std::ostream &operator<<(std::ostream &output, const long long &input)
 {
     std::cout << input << std::endl;
     return output;
 }
 
-template <typename T> std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
+template <typename T>
+std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
 {
     std::cout << "[";
 
@@ -50,7 +52,30 @@ template <typename T> std::ostream &operator<<(std::ostream &output, const std::
 class Solution
 {
     public:
-        int findTargetSumWays(std::vector<int> &nums, int target) {}
+        int total_way = 0;
+
+        int findTargetSumWays(std::vector<int> &nums, int target)
+        {
+            CalculateWay(nums, target, 0, 0);
+            return total_way;
+        }
+
+    private:
+        void CalculateWay(std::vector<int> &nums, int target, int currentIndex, int currentSum)
+        {
+            if (currentIndex == nums.size())
+            {
+                if (currentSum == target)
+                {
+                    total_way++;
+                }
+            }
+            else
+            {
+                CalculateWay(nums, target, currentIndex + 1, currentSum + nums[currentIndex]);
+                CalculateWay(nums, target, currentIndex + 1, currentSum - nums[currentIndex]);
+            }
+        }
 };
 
 int main()
