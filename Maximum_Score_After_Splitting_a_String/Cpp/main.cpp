@@ -22,8 +22,7 @@
 struct TestSuit
 {
     public:
-        std::vector<int> days;
-        std::vector<int> costs;
+        std::string s;
 };
 
 template <typename T>
@@ -52,26 +51,39 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
 class Solution
 {
     public:
-        int mincostTickets(std::vector<int> &days, std::vector<int> &costs)
+        int maxScore(std::string s)
         {
-            int day_size = days.size();
-            std::vector<int> storage(day_size, INT32_MAX);
-            
+            int num_one = std::count(s.begin(), s.end(), '1');
+            int ans     = 0;
+            int zero    = 0;
+            for (int i = 0; i < s.size() - 1; i++)
+            {
+                if (s[i] == '1')
+                    num_one--;
+                else
+                    zero++;
+
+                ans = std::max(ans, zero + num_one);
+            }
+
+            return ans;
         }
 };
+
 
 int main()
 {
     std::vector<TestSuit> testcase {
-        {{1, 4, 6, 7, 8, 20},                     {2, 7, 15}},
-        {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31}, {2, 7, 15}},
+        {"011101"},
+        {"00111"},
+        {"1111"},
     };
 
     for (int i = 0; i < testcase.size(); i++)
     {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
-        auto r = s.mincostTickets(testcase[i].days, testcase[i].costs);
+        auto r = s.maxScore(testcase[i].s);
         std::cout << std::boolalpha << r << std::endl;
     }
 
