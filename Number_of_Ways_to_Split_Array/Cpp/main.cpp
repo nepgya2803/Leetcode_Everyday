@@ -25,13 +25,15 @@ struct TestSuit
         std::vector<int> nums;
 };
 
-template <typename T> std::ostream &operator<<(std::ostream &output, const long long &input)
+template <typename T>
+std::ostream &operator<<(std::ostream &output, const long long &input)
 {
     std::cout << input << std::endl;
     return output;
 }
 
-template <typename T> std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
+template <typename T>
+std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
 {
     std::cout << "[";
 
@@ -49,8 +51,28 @@ template <typename T> std::ostream &operator<<(std::ostream &output, const std::
 class Solution
 {
     public:
-        int waysToSplitArray(std::vector<int> &nums) {
-            
+        int waysToSplitArray(std::vector<int> &nums)
+        {
+            std::vector<long long> prefixSum(nums.size(), 0);
+            int res       = 0;
+            long long sum = 0;
+            for (int i = 0; i < nums.size(); i++)
+            {
+                sum += nums[i];
+                prefixSum[i] = sum;
+            }
+
+            int n = nums.size();
+            for (int i = 0; i < nums.size() - 1; i++)
+            {
+                long long leftSum  = prefixSum[i];
+                long long rightSum = prefixSum[n - 1] - prefixSum[i];
+
+                if (leftSum >= rightSum)
+                    res++;
+            }
+
+            return res;
         }
 };
 
