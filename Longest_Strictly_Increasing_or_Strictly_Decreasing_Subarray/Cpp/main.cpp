@@ -55,13 +55,9 @@ class Solution
         int longestMonotonicSubarray(std::vector<int> &nums)
         {
             int size = nums.size();
-
-            if (size <= 2)
-                return size;
-
-            int inc = 1;
-            int des = 1;
-            int max = 0;
+            int inc  = 1;
+            int des  = 1;
+            int max  = 1;
 
             for (int i = 0; i < size - 1; i++)
             {
@@ -70,7 +66,7 @@ class Solution
                     inc++;
                     des = 1;
                 }
-                if (nums[i + 1] < nums[i])
+                else if (nums[i + 1] < nums[i])
                 {
                     des++;
                     inc = 1;
@@ -81,7 +77,7 @@ class Solution
                     des = 1;
                 }
 
-                max = std::max(max, (inc > des ? inc : des));
+                max = std::max(max, std::max(inc, des));
             }
 
             return max;
