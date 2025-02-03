@@ -56,7 +56,7 @@ class Solution
         {
             int size = nums.size();
 
-            if (size <= 1)
+            if (size <= 2)
                 return size;
 
             int inc = 1;
