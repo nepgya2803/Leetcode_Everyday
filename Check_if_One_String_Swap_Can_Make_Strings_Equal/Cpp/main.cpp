@@ -56,11 +56,10 @@ class Solution
         bool areAlmostEqual(std::string s1, std::string s2)
         {
             int unmatchCount = 0;
-            int size1        = s1.size();
-            int size2        = s2.size();
+            int size         = s1.size();
             int x            = -1;
 
-            for (int i = 0; i < size1; i++)
+            for (int i = 0; i < size; i++)
             {
                 if (s1[i] != s2[i])
                 {
