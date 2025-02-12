@@ -63,9 +63,9 @@ class Solution
             {
                 originStack.push(s[i]);
 
-                if (originStack.size() > partSize && CheckMatch(originStack, part, partSize))
+                if (originStack.size() >= partSize && CheckMatch(originStack, part, partSize))
                 {
-                    for (int p; p < partSize; p++)
+                    for (int p = 0; p < partSize; p++)
                     {
                         originStack.pop();
                     }
@@ -89,7 +89,7 @@ class Solution
             std::string built;
             for (int i = partLength - 1; i >= 0; i--)
             {
-                built += tmp.top();
+                built = tmp.top() + built;
                 tmp.pop();
             }
 
@@ -100,9 +100,8 @@ class Solution
 int main()
 {
     std::vector<TestSuit> testcase {
-        {"abc"},
-        {"cb34"},
-        {"r4tt67t"},
+        {"daabcbaabcbc", "abc"},
+        {"axxxxyyyyb",   "xy" },
     };
 
     for (int i = 0; i < testcase.size(); i++)
