@@ -23,7 +23,7 @@
 struct TestSuit
 {
     public:
-        std::string tiles;
+        std::string pattern;
 };
 
 template <typename T>
@@ -52,48 +52,37 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
 class Solution
 {
     public:
-        int numTilePossibilities(std::string tiles)
+        std::string smallestNumber(std::string pattern)
         {
-            std::unordered_map<char, int> frequencyCount;
-            int result = 0;
+            std::string num = "";
+            std::stack<int> wordPattern;
 
-            std::set<std::string> unique;
-            std::vector<bool> used(tiles.size(), false);
-            CalculateThePermutation(tiles, " ", used, unique);
+            for (int i = 0; i <= pattern.size(); i++) {
+                wordPattern.push(i + 1);
 
-            return unique.size() - 1;
-        }
-
-    private:
-        void CalculateThePermutation(std::string &tiles,
-                                     std::string pos,
-                                     std::vector<bool> &used,
-                                     std::set<std::string> &unique)
-        {
-            unique.insert(pos);
-
-            for (int i = 0; i < tiles.size(); ++i) {
-                if (!used[i]) {
-                    used[i] = true;
-                    CalculateThePermutation(tiles, pos + tiles[i], used, unique);
-                    used[i] = false;
+                if (i == pattern.size() || pattern[i] == 'I') {
+                    while (!wordPattern.empty()) {
+                        num += std::to_string(wordPattern.top());
+                        wordPattern.pop();
+                    }
                 }
             }
+
+            return num;
         }
 };
 
 int main()
 {
     std::vector<TestSuit> testcase {
-        { "AAB" },
-        { "AAABBC" },
-        { "V" },
+        { "IIIDIDDD" },
+        { "DDD" },
     };
 
     for (int i = 0; i < testcase.size(); i++) {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
-        auto r = s.numTilePossibilities(testcase[i].tiles);
+        auto r = s.smallestNumber(testcase[i].pattern);
         std::cout << std::boolalpha << r << std::endl;
     }
 
