@@ -1,48 +1,26 @@
-#include <algorithm>
-#include <cctype>
-#include <cmath>
-#include <cstring>
-#include <iomanip>
-#include <iostream>
-#include <iterator>
-#include <map>
-#include <memory>
-#include <queue>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
-#include <string_view>
-#include <fstream>
+#include <bits/stdc++.h>
+using namespace std;
 
-void Solution(int &target, std::vector<int> &arr) {
-    std::unordered_map<int, int> collector;
+int main()
+{
+    int n, x;
+    cin >> n >> x;
 
-    for (int i = 0; i < arr.size(); i++) {
-        int remainder = target - arr[i];
+    vector<int> values(n);
+    for (int i = 0; i < n; i++) {
+        cin >> values[i];
+    }
 
-        if (collector.find(remainder) != collector.end()) {
-            std::cout << collector[remainder] << " " << i + 1 << std::endl;
-            return;
+    // use a map to avoid using a very large array
+    map<int, int> val_to_ind;
+    for (int i = 0; i < n; i++) {
+        // target minus a number is the other number
+        if (val_to_ind.count(x - values[i])) {
+            cout << i + 1 << " " << val_to_ind[x - values[i]] << endl;
+            return 0;
         }
-
-        collector[arr[i]] = i + 1;
+        val_to_ind[values[i]] = i + 1;
     }
 
-    std::cout << "IMPOSSIBLE" << std::endl;
-}
-
-int main() {
-    int array_size, target = 0;
-    std::cin >> array_size >> target;
-    std::vector<int> arr(array_size);
-    for (int i = 0; i < array_size; i++) {
-        std::cin >> arr[i];
-    }
-
-    Solution(target, arr);
-
-    return 1;
+    cout << "IMPOSSIBLE" << endl;
 }
