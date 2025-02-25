@@ -49,8 +49,17 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input)
 /*
 Solution
 */
-void Solve(int &size, std::vector<ll> &nums)
+std::map<int, std::vector<int>> adj;
+std::map<int, int> visited;
+
+void Solve(std::vector<int> &nums)
 {
+    int size = nums.size();
+    std::queue<std::set<int>> q;
+    std::set<int> s;
+    s.insert(1);
+    q.push(s);
+    int i = 0;
     
 }
 
@@ -59,22 +68,26 @@ int main()
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    int node = 0;
-    std::cin >> testcase;
+    int node, a, b = 0;
+    std::cin >> node;
 
-    while (testcase--)
+    for (int i = 0; i < node - 1; i++)
     {
-        int n = 0;
-        std::cin >> n;
-        std::vector<ll> nums(n);
-
-        for (int i = 0; i < n; i++)
-        {
-            std::cin >> nums[i];
-        }
-
-        Solve(n, nums);
+        std::cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
     }
+
+    std::vector<int> sequence(node);
+
+    int seq = 0;
+    for (int i = 0; i < node; i++)
+    {
+        std::cin >> seq;
+        sequence.push_back(seq);
+    }
+
+    Solve(sequence);
 
     return 0;
 }
