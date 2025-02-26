@@ -52,15 +52,62 @@ Solution
 std::map<int, std::vector<int>> adj;
 std::map<int, int> visited;
 
-void Solve(std::vector<int> &nums)
+bool Solve(std::vector<int> &nums)
 {
+    if (nums[0] != 1)
+    {
+        return false;
+    }
+
     int size = nums.size();
     std::queue<std::set<int>> q;
     std::set<int> s;
     s.insert(1);
     q.push(s);
     int i = 0;
-    
+
+    while (!q.empty() && i < size)
+    {
+        if (visited.count(nums[i]))
+        {
+            return false;
+        }
+
+        visited[nums[i]] = 1;
+
+        if (q.front().size() == 0)
+        {
+            q.pop();
+        }
+
+        if (q.front().find(nums[i]) == q.front().end())
+        {
+            return false;
+        }
+
+        s.clear();
+
+        for (auto j : adj[nums[i]])
+        {
+            if (visited.count(j))
+            {
+                continue;
+            }
+            s.insert(j);
+        }
+
+        if (s.size() > 0)
+        {
+            std::set<int> tmp = s;
+            q.push(tmp);
+        }
+        s.clear();
+
+        q.front().erase(nums[i]);
+        i++;
+    }
+
+    return true;
 }
 
 int main()
@@ -84,10 +131,17 @@ int main()
     for (int i = 0; i < node; i++)
     {
         std::cin >> seq;
-        sequence.push_back(seq);
+        sequence[i] = seq;
     }
 
-    Solve(sequence);
+    if (Solve(sequence) == true)
+    {
+        std::cout << "Yes" << std::endl;
+    }
+    else
+    {
+        std::cout << "No" << std::endl;
+    }
 
     return 0;
 }
