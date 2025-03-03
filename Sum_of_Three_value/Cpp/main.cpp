@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define ll long long
-#define LOG_DEBUG(x) (std::cout << x << std::endl)
+#define DEBUG(x) (std::cout << x << std::endl)
 #define Assert(condition)
 
 template <typename T>
