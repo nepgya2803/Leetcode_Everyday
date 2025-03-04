@@ -40,8 +40,26 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input) {
 Solution
 */
 
+int dx[4] = { 1, -1, 0, 0 };
+int dy[4] = { 0, 0, 1, -1 };
+
 int Solve(int &x, int &y, Matrix &map, pii &protagonist, pii &door) {
-    
+    std::queue<pii> q;
+    q.push(door);
+
+    while (!q.empty()) {
+        door = q.front();
+        q.pop();
+        for (int i = 0; i < 4; i++) {
+            pii next = door;
+            next.first += dx[i];
+            next.second += dy[i];
+            if (next.first < 0 || next.first >= x || next.second < 0 || next.second >= y ||
+                map[next.first][next.second] == 'T')
+                continue;
+            
+        }
+    }
 }
 
 int main() {
@@ -63,7 +81,7 @@ int main() {
         }
     }
 
-    int res = Solve(x, y, m);
+    int res = Solve(x, y, m, pos, door);
 
     return 0;
 }
