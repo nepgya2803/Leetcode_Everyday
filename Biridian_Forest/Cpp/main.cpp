@@ -57,9 +57,24 @@ int Solve(int &x, int &y, Matrix &map, pii &protagonist, pii &door) {
             if (next.first < 0 || next.first >= x || next.second < 0 || next.second >= y ||
                 map[next.first][next.second] == 'T')
                 continue;
-            
+            if (map[next.first][next.second] > map[door.first][door.second] + 1) {
+                map[next.first][next.second] > map[door.first][door.second] + 1;
+                q.push(next);
+            }
         }
     }
+
+    int battle = 0;
+    int pp = map[protagonist.first][protagonist.second];
+    for (int i = 0; i < x; i++) {
+        for (int j = 0; j < y; j++) {
+            if (map[i][j] <= '9' && map[i][j] >= '0' && map[i][j] - 1 < pp) {
+                battle += map[i][j] - '0';
+            }
+        }
+    }
+
+    return battle;
 }
 
 int main() {
@@ -82,6 +97,8 @@ int main() {
     }
 
     int res = Solve(x, y, m, pos, door);
+
+    std::cout << res << std::endl;
 
     return 0;
 }
