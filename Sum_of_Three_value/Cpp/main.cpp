@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #define ll long long
+#define lli long long int
 #define DEBUG(x) (std::cout << x << std::endl)
 #define Assert(condition)
 
@@ -43,40 +44,47 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input) {
 /*
 Solution
 */
-void Solve(const int &size, std::vector<int> &nums, const int &target) {
-    std::vector<int> indexes;
+void Solve(const lli &size, std::vector<lli> &nums, const lli &target) {
+    std::vector<std::vector<lli>> copy(size, std::vector<lli>(2, 0));
 
     for (int i = 0; i < size; i++) {
-        indexes.push_back(i + 1);
-        int remainer = target - nums[i];
+        copy[i][0] = nums[i];
+        copy[i][1] = i + 1;
+    }
 
-        for (int left = i + 1, right = left + 1; right < size; right++) {
-            if (nums[left] + nums[right] == remainer) {
-                indexes.push_back(left + 1);
-                indexes.push_back(right + 1);
+    std::sort(copy.begin(), copy.end());
+
+    for (lli ptr1 = 0; ptr1 < size - 2; ptr1++) {
+        lli remainder = target - copy[ptr1][0];
+        lli ptr2 = ptr1 + 1;
+        lli ptr3 = size - 1;
+
+        while (ptr2 < ptr3) {
+            if (copy[ptr2][0] + copy[ptr3][0] == remainder) {
+                std::cout << copy[ptr1][1] << " " << copy[ptr2][1] << " " << copy[ptr3][1] << std::endl;
+                return;
+            }
+
+            if (copy[ptr2][0] + copy[ptr3][0] > remainder) {
+                ptr3--;
+            }
+
+            if (copy[ptr2][0] + copy[ptr3][0] < remainder) {
+                ptr2++;
             }
         }
-
-        if (indexes.size() < 3) {
-            indexes.clear();
-        }
     }
 
-    if (indexes.size() == 0) {
-        std::cout << "IMPOSSIBLE" << std::endl;
-        return;
-    }
-
-    std::cout << indexes[0] << " " << indexes[1] << " " << indexes[2] << std::endl;
+    std::cout << "IMPOSSIBLE" << std::endl;
 }
 
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    int size, target = 0;
+    lli size, target = 0;
     std::cin >> size >> target;
-    std::vector<int> arr(size);
+    std::vector<lli> arr(size);
 
     for (int i = 0; i < size; i++) {
         std::cin >> arr[i];
