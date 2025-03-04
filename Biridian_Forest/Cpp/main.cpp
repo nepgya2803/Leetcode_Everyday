@@ -7,6 +7,7 @@
 #define pii std::pair<int, int>
 #define mp std::make_pair
 #define LOG_DEBUG(x) (std::cout << x << std::endl)
+#define maxn 1e9
 // ----------------- MACRO ------------------//
 
 // ----------------- TYPEDEF ------------------//
@@ -47,7 +48,7 @@ Solution
 int dx[4] = { 1, -1, 0, 0 };
 int dy[4] = { 0, 0, 1, -1 };
 vs map(1005);
-vvi distance(1005, vi(1005));
+vvi distance(1005, vi(1005, maxn));
 
 int Solve(int &x, int &y, pii &now, pii &goal) {
     std::queue<pii> q;
@@ -91,7 +92,7 @@ int main() {
     int x, y = 0;
     std::cin >> x >> y;
     pii now, goal;
-    std::cout << x << y;
+
     for (int i = 0; i < x; i++) {
         std::cin >> map[i];
 
