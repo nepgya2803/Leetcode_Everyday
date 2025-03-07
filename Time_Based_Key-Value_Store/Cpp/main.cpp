@@ -51,7 +51,6 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input) {
 class TimeMap {
 public:
     TimeMap() {
-        std::cout << "HE" << std::endl;
     }
 
     void set(std::string key, std::string value, int timestamp) {
