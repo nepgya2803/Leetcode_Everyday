@@ -10,7 +10,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}/*.cpp"
+                "${fileDirname}/${fileBasename}"
             ],
             "options": {
                 "cwd": "/usr/bin/"
