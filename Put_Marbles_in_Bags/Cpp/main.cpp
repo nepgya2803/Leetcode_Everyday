@@ -61,7 +61,8 @@ public:
         }
 
         std::sort(pairWeight.begin(), pairWeight.end());
-        int answer = 0;
+        
+        long long answer = 0;
 
         for (int i = 0; i < k - 1; i++) {
             answer += pairWeight[n - 2 - i] - pairWeight[i];
