@@ -24,7 +24,6 @@
 struct TestSuit {
 public:
     int n;
-    int k;
 };
 
 template <typename T>
@@ -50,21 +49,37 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input) {
 
 class Solution {
 public:
-    long long countGoodIntegers(int n, int k) {
+    int countGoodNumbers(long long n) {
+        auto quickMul = [](int x, long long y) -> int {
+            int ret = 1, mul = x;
+            while (y > 0) {
+                if (y % 2 == 1) {
+                    ret = (long long)ret * mul % mod;
+                }
+                mul = (long long)mul * mul % mod;
+                y /= 2;
+            }
+            return ret;
+        };
+
+        return (long long)quickMul(5, (n + 1) / 2) * quickMul(4, n / 2) % mod;
     }
+
+private:
+    static constexpr int mod = 1000000007;
 };
 
 int main() {
     std::vector<TestSuit> testcase {
-        { 3, 5 },
-        { 1, 4 },
-        { 5, 6 },
+        { 1 },
+        { 4 },
+        { 50 },
     };
 
     for (int i = 0; i < testcase.size(); i++) {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
-        auto r = s.countGoodIntegers(testcase[i].n, testcase[i].k);
+        auto r = s.countGoodNumbers(testcase[i].n);
         std::cout << std::boolalpha << r << std::endl;
     }
 
