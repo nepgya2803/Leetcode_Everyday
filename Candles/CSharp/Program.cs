@@ -14,15 +14,28 @@ class Program
         IEnumerable<Testcase> testcases = new List<Testcase>
         {
             new Testcase { candles = 5, candleCompose = 2},
-            new Testcase { candles = 9, candleCompose = 1},
+            new Testcase { candles = 9, candleCompose = 1}, // -> Note that if the k or candleCompose = 1, the loop will take forever
+            new Testcase { candles = 4, candleCompose = 2},
+            new Testcase { candles = 7, candleCompose = 3},
+            new Testcase { candles = 134, candleCompose = 45},
         };
 
         int order = 1;
         foreach (var testcase in testcases)
         {
-            var res = sol.CandlesBurn(testcase.candles, testcase.candleCompose);
             Helper.WriteMessage($"Testcase {order}", ConsoleColor.Blue);
-            Helper.WriteMessage($"Result: {res}", ConsoleColor.DarkGreen);
+            var res = Task.Run(() => sol.CandlesBurn(testcase.candles, testcase.candleCompose));
+            bool isExceed = res.Wait(TimeSpan.FromSeconds(3));
+
+            if (isExceed)
+            {
+                Helper.WriteMessage($"Result: {res.Result}\n", ConsoleColor.DarkGreen);
+            }
+            else
+            {
+                Helper.WriteMessage($"Result: Time Limit Exceed!\n", ConsoleColor.Red);
+            }
+
             order++;
         }
     }
@@ -30,7 +43,7 @@ class Program
 
 class Solution
 {
-    public int CandlesBurn(int candles, int candleCompose)
+    public int CandlesBurn(int candles, int leftoverToBuildOne)
     {
         int burned = 0;
         int leftover = 0;
@@ -39,8 +52,8 @@ class Solution
         {
             burned += candles;
             leftover += candles;
-            candles = leftover / candleCompose;
-            leftover %= candleCompose;
+            candles = leftover / leftoverToBuildOne;
+            leftover %= leftoverToBuildOne;
         }
 
         return burned;
