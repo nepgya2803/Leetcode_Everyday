@@ -24,7 +24,7 @@
 struct TestSuit {
 public:
     std::vector<int> nums;
-    int k;
+    int target;
 };
 
 template <typename T>
@@ -50,41 +50,42 @@ std::ostream &operator<<(std::ostream &output, const std::vector<T> &input) {
 
 class Solution {
 public:
-    std::vector<int> maxSubsequence(std::vector<int> &nums, int k) {
-        std::vector<std::pair<int, int>> container;
-        int size = nums.size();
+    int numSubseq(std::vector<int> &nums, int target) {
+        int mod = 1e9 + 7, n = nums.size();
+        sort(nums.begin(), nums.end());
 
-        for (int index = 0; index < size; index++) {
-            container.emplace_back(index, nums[index]);
+        std::vector<int> power(n, 1);
+        for (int i = 1; i < n; ++i) {
+            power[i] = (power[i - 1] * 2) % mod;
         }
 
-        std::sort(container.begin(), container.end(), [&](auto pair1, auto pair2) {
-            return pair1.second > pair2.second;
-        });
+        int left = 0, right = n - 1, result = 0;
 
-        std::sort(container.begin(), container.begin() + k);
-        std::vector<int> ans;
-
-        for (int i = 0; i < k; i++) {
-            ans.emplace_back(container[i].second);
+        while (left <= right) {
+            if (nums[left] + nums[right] <= target) {
+                result = (result + power[right - left]) % mod;
+                ++left;
+            }
+            else {
+                --right;
+            }
         }
-
-        return ans;
+        return result;
     }
 };
 
 int main() {
     std::vector<TestSuit> testcase {
-        { { 2, 1, 3, 3 }, 2 },
-        { { -1, -2, 3, 4 }, 3 },
-        { { 3, 4, 3, 3 }, 2 },
+        { { 3, 5, 6, 7 }, 9 },
+        { { 3, 3, 6, 8 }, 10 },
+        { { 2, 3, 3, 4, 6, 7 }, 12 },
 
     };
 
     for (int i = 0; i < testcase.size(); i++) {
         Solution s;
         std::cout << ("\033[1;32mTestcase " + std::to_string(i + 1) + "\033[0m") << std::endl;
-        auto r = s.maxSubsequence(testcase[i].nums, testcase[i].k);
+        auto r = s.numSubseq(testcase[i].nums, testcase[i].target);
         std::cout << std::boolalpha << r << std::endl;
     }
 
